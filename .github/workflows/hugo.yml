@@ -53,7 +53,7 @@ jobs:
         git config user.name "Github Actions"
         git config user.email "gh@actions"
         git fetch
-        git checkout gh-pages
+        git checkout -f gh-pages
         cp -r public/* .
         rm -rf public/
         rm -rf hugo-install/
