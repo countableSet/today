@@ -34,3 +34,17 @@ jobs:
     # Compile files
     - name: Compile
       run: make
+
+    # Commit back to gh-pages branch
+    - name: Commit
+      env:
+        GITHUB_TOKEN: ${{ secrets.github_token }}
+      run: |
+        git config user.name "Github Actions"
+        git config user.email "gh@actions"
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        git checkout gh-pages
+        mv public/* .
+        rm -rf public/
+        git add .
+        git diff --quiet && git diff --staged --quiet || (git commit -m "action commit"; git push origin gh-pages)
