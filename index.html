@@ -63,11 +63,33 @@
       </div>
       <h2 class="subtitle is-6 date"><a href="https://today.countableset.com/posts/2020-07-10/">July 10, 2020</a></h2>
       <div class="content">
-        Hello World.
- Profiling golang projects  # .go file import ( _ &quot;net/http/pprof&quot; ) # bash $ curl -sK -v localhost:30020/debug/pprof/heap &gt; heap.out $ go tool pprof heap.out (pprof) png Generating report in profile001.png (pprof) exit Output in png requires graphviz (brew install graphviz)
-Fix tmux configuration issues when upgrading iTerm2 and tmux version 2.9 to 3.1b  unbind } ==&gt; unbind &quot;{&quot; unbind { ==&gt; unbind &quot;{&quot; bind \ if '[ ===&gt; bind \\ if '[ Scrolling in iTerm and tmux, fixed by
- Solved by enabling &lsquo;enable mouse reporting&rsquo; in Preferences &gt; Profile &gt; Terminal &gt; Enable Mouse Reporting
- 
+        <p>Hello World. First!</p>
+<ol>
+<li>Profiling golang projects</li>
+</ol>
+<pre><code># .go file
+import (
+    _ &quot;net/http/pprof&quot;
+)
+
+# bash
+$ curl -sK -v localhost:30020/debug/pprof/heap &gt; heap.out
+$ go tool pprof heap.out
+(pprof) png
+Generating report in profile001.png
+(pprof) exit
+</code></pre><p>Output in png requires <a href="https://graphviz.org/download/">graphviz</a> (<code>brew install graphviz</code>)</p>
+<ol start="2">
+<li>Fix tmux configuration issues when upgrading iTerm2 and tmux version 2.9 to 3.1b</li>
+</ol>
+<pre><code>unbind } ==&gt; unbind &quot;{&quot;
+unbind { ==&gt; unbind &quot;{&quot;
+bind \ if '[ ===&gt; bind \\ if '[
+</code></pre><p>Scrolling in iTerm and tmux, fixed by</p>
+<blockquote>
+<p>Solved by enabling &lsquo;enable mouse reporting&rsquo; in Preferences &gt; Profile &gt; Terminal &gt; Enable Mouse Reporting</p>
+</blockquote>
+
       </div>
     </article>
     
