@@ -56,5 +56,6 @@ jobs:
         git checkout gh-pages
         cp -r public/* .
         rm -rf public/
+        rm -rf hugo-install/
         git add .
         git diff --quiet && git diff --staged --quiet || (git commit -m "action commit"; git push origin gh-pages)
