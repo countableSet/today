@@ -25,11 +25,37 @@ jobs:
       env:
         HUGO_VERSION: "0.73.0"
       run: |
-        apt update && apt install -y make wget
+        mkdir -p hugo-install
         wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.tar.gz
-        tar -xzf hugo_extended_${HUGO_VERSION}_Linux-64bit.tar.gz -C /usr/local/bin
+        tar -xzf hugo_extended_${HUGO_VERSION}_Linux-64bit.tar.gz -C ./hugo-install
         rm hugo_extended_${HUGO_VERSION}_Linux-64bit.tar.gz
+        echo "::add-path::$(pwd)/hugo-install"
 
     # Compile files
     - name: Compile
       run: make
+
+    # Configure ssh
+    - name: Setup SSH Keys and known_hosts
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+        ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+    
+    # Commit back to gh-pages branch
+    - name: Commit
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        git config user.name "Github Actions"
+        git config user.email "gh@actions"
+        git fetch
+        git checkout -f gh-pages
+        cp -r public/* .
+        rm -rf public/
+        rm -rf hugo-install/
+        git add .
+        git diff --quiet && git diff --staged --quiet || (git commit -m "action commit"; git push origin gh-pages)
