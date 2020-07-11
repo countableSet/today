@@ -35,14 +35,23 @@ jobs:
     - name: Compile
       run: make
 
+    # Configure ssh
+    - name: Setup SSH Keys and known_hosts
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+        ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+    
     # Commit back to gh-pages branch
     - name: Commit
       env:
-        GITHUB_TOKEN: ${{ secrets.github_token }}
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       run: |
         git config user.name "Github Actions"
         git config user.email "gh@actions"
-        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         git checkout gh-pages
         mv public/* .
         rm -rf public/
