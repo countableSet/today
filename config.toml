@@ -1,0 +1,8 @@
+baseURL = "https://today.countableset.com/"
+languageCode = "en-us"
+title = "Today I Learned"
+theme = "kiss"
+paginate = 100
+
+[params.info]
+homeTitle = "Today I Learned" # Title for home page

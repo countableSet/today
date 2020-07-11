@@ -1,0 +1,28 @@
+{{ partial "header" . }}
+{{ partial "nav" . }}
+<section class="section">
+  <div class="container">
+    {{- $pages := . -}}
+    {{- if .IsHome -}}
+    {{- $pages = .Site.RegularPages -}}
+    {{- else -}}
+    {{ $pages = .Pages -}}
+    {{- end -}}
+    {{ $paginator := .Paginate (where $pages "Params.hidden" "ne" true) }}
+    {{ range sort .Paginator.Pages }}
+    <article>
+      <div class="subtitle tags is-6 is-pulled-right">
+        {{ if .Params.tags }}
+        {{ partial "tags" .Params.tags }}
+        {{ end }}
+      </div>
+      <h2 class="subtitle is-6 date"><a href="{{ .Permalink }}">{{ .Date.Format "January 2, 2006" }}</a>{{ if .Draft }} ::Draft{{ end }}</h2>
+      <div class="content">
+        {{ .Content | plainify | safeHTML }}
+      </div>
+    </article>
+    {{ end }}
+  </div>
+</section>
+{{ partial "pager" . }}
+{{ partial "footer" . }}
