@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Today I Learned</title>
-    <link>https://today.countableset.com/</link>
-    <description>Recent content on Today I Learned</description>
+    <title>promethemus on Today I Learned</title>
+    <link>https://today.countableset.com/tags/promethemus/</link>
+    <description>Recent content in promethemus on Today I Learned</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 14 Jul 2020 13:52:06 -0700</lastBuildDate>
     
-	<atom:link href="https://today.countableset.com/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://today.countableset.com/tags/promethemus/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,17 +20,6 @@
       <description>Provisioning Grafana Docker docker-compose.yml   prometheus: image: prom/prometheus restart: always volumes: - ./prometheus/config.yaml:/etc/prometheus/prometheus.yml command: &amp;quot;--config.file=/etc/prometheus/prometheus.yml&amp;quot; ports: - &amp;quot;9090:9090&amp;quot; # ui networks: - service grafana: image: grafana/grafana restart: always volumes: - ./grafana/dashboards:/etc/grafana/provisioning/dashboards/ - ./grafana/datasources:/etc/grafana/provisioning/datasources/ ports: - &amp;quot;3000:3000&amp;quot; # ui networks: - service File structure
 ./grafana ├── dashboards │ ├── dashboard.yaml │ └── go-processes_rev2.json └── datasources └── datasources.yaml dashboard.yaml
 apiVersion: 1 providers: # &amp;lt;string&amp;gt; an unique provider name - name: &amp;quot;a unique provider name&amp;quot; # &amp;lt;int&amp;gt; org id.</description>
-    </item>
-    
-    <item>
-      <title>2020 07 10</title>
-      <link>https://today.countableset.com/posts/2020-07-10/</link>
-      <pubDate>Fri, 10 Jul 2020 16:57:06 -0700</pubDate>
-      
-      <guid>https://today.countableset.com/posts/2020-07-10/</guid>
-      <description>Hello World. First!
- Profiling golang projects  # .go file import ( _ &amp;quot;net/http/pprof&amp;quot; ) # bash $ curl -sK -v localhost:30020/debug/pprof/heap &amp;gt; heap.out $ go tool pprof heap.out (pprof) png Generating report in profile001.png (pprof) exit $ go tool pprof -http=:8080 heap.out Output in png requires graphviz (brew install graphviz)
-Fix tmux configuration issues when upgrading iTerm2 and tmux version 2.9 to 3.1b  unbind } ==&amp;gt; unbind &amp;quot;{&amp;quot; unbind { ==&amp;gt; unbind &amp;quot;{&amp;quot; bind \ if &#39;[ ===&amp;gt; bind \\ if &#39;[ Scrolling in iTerm and tmux, fixed by</description>
     </item>
     
   </channel>

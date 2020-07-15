@@ -76,6 +76,7 @@ $ go tool pprof heap.out
 (pprof) png
 Generating report in profile001.png
 (pprof) exit
+$ go tool pprof -http=:8080 heap.out
 </code></pre><p>Output in png requires <a href="https://graphviz.org/download/">graphviz</a> (<code>brew install graphviz</code>)</p>
 <ol start="2">
 <li>Fix tmux configuration issues when upgrading iTerm2 and tmux version 2.9 to 3.1b</li>
