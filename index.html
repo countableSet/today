@@ -48,6 +48,89 @@
       <div class="subtitle tags is-6 is-pulled-right">
         
         
+<a class="subtitle is-6" href="/tags/spring/">#spring</a>
+
+
+
+  
+  | <a class="subtitle is-6" href="/tags/tomcat/">#tomcat</a>
+  
+
+
+        
+      </div>
+      <h2 class="subtitle is-6 date"><a href="https://today.countableset.com/posts/2020-07-29/">July 29, 2020</a></h2>
+      <div class="content">
+        <ol>
+<li>Spring boot (2.3.0+) tomcat access log configuration to log to stdout</li>
+</ol>
+<pre><code>server.tomcat.accesslog.enabled=true
+server.tomcat.accesslog.directory=/dev
+server.tomcat.accesslog.prefix=stdout
+server.tomcat.accesslog.buffered=false
+server.tomcat.accesslog.suffix=
+server.tomcat.accesslog.file-date-format=
+server.tomcat.accesslog.pattern=%{yyyy-MM-dd HH:mm:ss.SSS}t %r %s %b %T | %{Content-Type}i | %{Content-Type}o
+</code></pre><ol start="2">
+<li>Spring WebClient <code>Exceeded limit on max bytes to buffer</code> exception</li>
+</ol>
+<p>Fix is to increase the max memory size for a specific codec or all codecs, for example: <code>spring.codec.max-in-memory-size=20MB</code></p>
+<pre><code>2020-07-29 16:58:43.046  WARN 1 --- [or-http-epoll-2] reactor.netty.channel.FluxReceive        : [id: 0xca1ab03a, L:/x.x.x.x ! R:example.com/x.x.x.x:443] An exception has been observed post termination, use DEBUG level to see the full stack: io.netty.util.IllegalReferenceCountException: refCnt: 0, decrement: 1
+2020-07-29 16:59:36.605  INFO 1 --- [or-http-epoll-3] com.example.RestProvider                 : retry rest call single commit request, retry [6], error [org.springframework.core.io.buffer.DataBufferLimitException: Exceeded limit on max bytes to buffer : 262144]
+2020-07-29 16:59:36.607 ERROR 1 --- [or-http-epoll-3] r.n.channel.ChannelOperationsHandler     : [id: 0xb1b84f9b, L:/x.x.x.x ! R:example.com/x.x.x.x:443] Error was received while reading the incoming data. The connection will be closed.
+
+io.netty.util.IllegalReferenceCountException: refCnt: 0, decrement: 1
+	at io.netty.util.internal.ReferenceCountUpdater.toLiveRealRefCnt(ReferenceCountUpdater.java:74) ~[netty-common-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.util.internal.ReferenceCountUpdater.release(ReferenceCountUpdater.java:138) ~[netty-common-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.buffer.AbstractReferenceCountedByteBuf.release(AbstractReferenceCountedByteBuf.java:100) ~[netty-buffer-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.handler.codec.http.DefaultHttpContent.release(DefaultHttpContent.java:92) ~[netty-codec-http-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.util.ReferenceCountUtil.release(ReferenceCountUtil.java:88) ~[netty-common-4.1.49.Final.jar!/:4.1.49.Final]
+	at reactor.netty.channel.FluxReceive.onInboundNext(FluxReceive.java:334) ~[reactor-netty-0.9.7.RELEASE.jar!/:0.9.7.RELEASE]
+	at reactor.netty.channel.ChannelOperations.onInboundNext(ChannelOperations.java:352) ~[reactor-netty-0.9.7.RELEASE.jar!/:0.9.7.RELEASE]
+	at reactor.netty.http.client.HttpClientOperations.onInboundNext(HttpClientOperations.java:629) ~[reactor-netty-0.9.7.RELEASE.jar!/:0.9.7.RELEASE]
+	at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:96) ~[reactor-netty-0.9.7.RELEASE.jar!/:0.9.7.RELEASE]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:103) ~[netty-codec-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:436) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:324) ~[netty-codec-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:296) ~[netty-codec-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.handler.ssl.SslHandler.unwrap(SslHandler.java:1518) ~[netty-handler-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.handler.ssl.SslHandler.decodeJdkCompatible(SslHandler.java:1267) ~[netty-handler-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.handler.ssl.SslHandler.decode(SslHandler.java:1314) ~[netty-handler-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.decodeRemovalReentryProtection(ByteToMessageDecoder.java:501) ~[netty-codec-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.callDecode(ByteToMessageDecoder.java:440) ~[netty-codec-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:276) ~[netty-codec-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919) ~[netty-transport-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.channel.epoll.AbstractEpollStreamChannel$EpollStreamUnsafe.epollInReady(AbstractEpollStreamChannel.java:792) ~[netty-transport-native-epoll-4.1.49.Final-linux-x86_64.jar!/:4.1.49.Final]
+	at io.netty.channel.epoll.EpollEventLoop.processReady(EpollEventLoop.java:475) ~[netty-transport-native-epoll-4.1.49.Final-linux-x86_64.jar!/:4.1.49.Final]
+	at io.netty.channel.epoll.EpollEventLoop.run(EpollEventLoop.java:378) ~[netty-transport-native-epoll-4.1.49.Final-linux-x86_64.jar!/:4.1.49.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) ~[netty-common-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.49.Final.jar!/:4.1.49.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.49.Final.jar!/:4.1.49.Final]
+	at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
+</code></pre>
+      </div>
+    </article>
+    
+    <article>
+      <div class="subtitle tags is-6 is-pulled-right">
+        
+        
 <a class="subtitle is-6" href="/tags/java/">#java</a>
 
 
