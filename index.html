@@ -53,6 +53,140 @@
 
 
   
+  | <a class="subtitle is-6" href="/tags/kotlin/">#kotlin</a>
+  
+
+
+        
+      </div>
+      <h2 class="subtitle is-6 date"><a href="https://today.countableset.com/posts/2020-08-17/">August 17, 2020</a></h2>
+      <div class="content">
+        <ol>
+<li>Validations in Spring in Kotlin</li>
+</ol>
+<pre><code>@UniqueName
+data class CreateRequest(
+    val id: String = &quot;&quot;,
+    @get:NotBlank(message = &quot;{req.name.blank}&quot;)
+    val name: String = &quot;&quot;,
+    @get:NotBlank(message = &quot;{req.description.blank}&quot;)
+    val description: String = &quot;&quot;,
+    @get:Valid
+    val nested: NestedClass = NestedClass(&quot;&quot;, &quot;&quot;),
+)
+
+data class NestedClass(
+    @get:NotBlank(message = &quot;{req.nested.something.blank}&quot;)
+    val something: String,
+    @get:NotBlank(message = &quot;{req.nested.something_else.blank}&quot;)
+    val somethingElse: String
+)
+
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.RUNTIME)
+@Constraint(validatedBy = [UniqueNameValidator::class])
+annotation class UniqueName(
+    val message: String = &quot;&quot;,
+    val groups: Array&lt;KClass&lt;*&gt;&gt; = [],
+    val payload: Array&lt;KClass&lt;out Payload&gt;&gt; = []
+)
+
+class UniqueNameValidator(
+    private val sampleService: SampleService
+) : ConstraintValidator&lt;UniqueName, CreateRequest&gt; {
+    override fun isValid(request: CreateRequest, context: ConstraintValidatorContext): Boolean {
+        val dupSample = sampleService.findByName(request.name)
+        val result = !(dupSample != null &amp;&amp; dupSample.id != project.id)
+        if (!result) {
+            context.disableDefaultConstraintViolation()
+            context
+                .buildConstraintViolationWithTemplate(&quot;{req.name.unique}&quot;)
+                .addPropertyNode(&quot;name&quot;)
+                .addConstraintViolation()
+        }
+        return result
+    }
+}
+</code></pre><p><code>src/main/resources/ValidationMessages.properties</code></p>
+<pre><code>req.name.blank=Name is required.
+req.name.unique=Name must be unique.
+req.description.blank=Description is required.
+req.nested.something.blank=Something is required.
+req.nested.something_else.blank=Something Else is required.
+</code></pre><p>Custom Response Messages</p>
+<pre><code>@ControllerAdvice
+class ControllerAdvice {
+    @ExceptionHandler(value = [MethodArgumentNotValidException::class])
+    fun handleMethodArgumentNotValid(exception: MethodArgumentNotValidException): ResponseEntity&lt;ValidationError&gt; {
+        val violations = exception.bindingResult.allErrors
+            .mapNotNull { error -&gt;
+                when (error) {
+                    is FieldError -&gt; Violation(error.field.toSnakeCase(), error.defaultMessage ?: &quot;&quot;)
+                    is ObjectError -&gt; Violation(error.objectName.toSnakeCase(), error.defaultMessage ?: &quot;&quot;)
+                    else -&gt; null
+                }
+            }
+            .toList()
+        return ResponseEntity.status(BAD_REQUEST).body(ValidationError(errors = violations))
+    }
+}
+
+class ValidationError(
+    val status: String = BAD_REQUEST.toString(),
+    val message: String = &quot;Errors occurred during validation&quot;,
+    val errors: List&lt;Violation&gt;
+)
+class Violation(val field: String, val message: String)
+
+fun String.toSnakeCase(): String = Normalizer
+    .normalize(this, Normalizer.Form.NFD)
+    .replace(&quot;([A-Z]+)&quot;.toRegex(), &quot;\\_\$1&quot;)
+    .toLowerCase()
+</code></pre><p>Controller</p>
+<pre><code>@PostMapping
+fun create(@Valid @RequestBody body: CreateRequest): SampleDocument {
+    return sampleService.save(body)
+}
+</code></pre><p>Sample Response</p>
+<pre><code>{
+  &quot;status&quot;: &quot;400 BAD_REQUEST&quot;,
+  &quot;message&quot;: &quot;Errors occurred during validation&quot;,
+  &quot;errors&quot;: [
+    {
+      &quot;field&quot;: &quot;nested.something_else&quot;,
+      &quot;message&quot;: &quot;Something Else is required.&quot;
+    },
+    {
+      &quot;field&quot;: &quot;name&quot;,
+      &quot;message&quot;: &quot;Name must be unique.&quot;
+    },
+    {
+      &quot;field&quot;: &quot;nested.something&quot;,
+      &quot;message&quot;: &quot;Something is required.&quot;
+    },
+    {
+      &quot;field&quot;: &quot;name&quot;,
+      &quot;message&quot;: &quot;Name is required.&quot;
+    },
+    {
+      &quot;field&quot;: &quot;description&quot;,
+      &quot;message&quot;: &quot;Description is required.&quot;
+    }
+  ]
+}
+</code></pre>
+      </div>
+    </article>
+    
+    <article>
+      <div class="subtitle tags is-6 is-pulled-right">
+        
+        
+<a class="subtitle is-6" href="/tags/spring/">#spring</a>
+
+
+
+  
   | <a class="subtitle is-6" href="/tags/tomcat/">#tomcat</a>
   
 
