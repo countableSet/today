@@ -3,6 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://today.countableset.com/posts/2020-09-09/</loc>
+    <lastmod>2020-09-09T16:57:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://today.countableset.com/tags/docker/</loc>
+    <lastmod>2020-09-09T16:57:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://today.countableset.com/posts/</loc>
+    <lastmod>2020-09-09T16:57:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://today.countableset.com/tags/</loc>
+    <lastmod>2020-09-09T16:57:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://today.countableset.com/</loc>
+    <lastmod>2020-09-09T16:57:06-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://today.countableset.com/posts/2020-08-17/</loc>
     <lastmod>2020-08-17T16:57:06-07:00</lastmod>
   </url>
@@ -13,22 +38,7 @@
   </url>
   
   <url>
-    <loc>https://today.countableset.com/posts/</loc>
-    <lastmod>2020-08-17T16:57:06-07:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://today.countableset.com/tags/spring/</loc>
-    <lastmod>2020-08-17T16:57:06-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://today.countableset.com/tags/</loc>
-    <lastmod>2020-08-17T16:57:06-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://today.countableset.com/</loc>
     <lastmod>2020-08-17T16:57:06-07:00</lastmod>
   </url>
   
