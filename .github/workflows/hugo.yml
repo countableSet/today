@@ -31,6 +31,8 @@ jobs:
         run: |
           make
           ls -al
+          pwd
+          ls -al public
 
       # Commit to gh-pages
       - name: Deploy
