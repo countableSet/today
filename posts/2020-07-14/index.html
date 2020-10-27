@@ -1,69 +1,6 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"  lang="en-us">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-<title>2020 07 14 | Today I Learned</title>
-
-
-
-<link rel="stylesheet" href="/css/style.css"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<link rel="canonical" href="https://today.countableset.com/posts/2020-07-14/">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
-</head>
-<body>
-<section class="section">
-  <div class="container">
-    <nav id="nav-main" class="nav">
-      <div id="nav-name" class="nav-left">
-        <a id="nav-anchor" class="nav-item" href="https://today.countableset.com/">
-          <h1 id="nav-heading" class="title is-4">Today I Learned</h1>
-        </a>
-      </div>
-      <div class="nav-right">
-        <nav id="nav-items" class="nav-item level is-mobile"></nav>
-      </div>
-    </nav>
-
-    <nav class="nav">
-      
-
-      
-    </nav>
-
-  </div>
-  <script src="/js/navicon-shift.js"></script>
-</section>
-<section class="section">
-  <div class="container">
-    <div class="subtitle tags is-6 is-pulled-right">
-      
-      
-<a class="subtitle is-6" href="/tags/promethemus/">#promethemus</a>
-
-
-
-  
-  | <a class="subtitle is-6" href="/tags/grafana/">#grafana</a>
-  
-
-
-      
-    </div>
-    <h2 class="subtitle is-6">July 14, 2020</h2>
-    
-    <div class="content">
-      <ol>
-<li>Provisioning Grafana Docker
-docker-compose.yml</li>
-</ol>
-<pre><code>  prometheus:
+<!doctype html><html xmlns=http://www.w3.org/1999/xhtml lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>2020 07 14 | Today I Learned</title><link rel=stylesheet href=/css/style.css><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=canonical href=https://today.countableset.com/posts/2020-07-14/><meta name=msapplication-TileColor content="#da532c"><meta name=theme-color content="#ffffff"></head><body><section class=section><div class=container><nav id=nav-main class=nav><div id=nav-name class=nav-left><a id=nav-anchor class=nav-item href=https://today.countableset.com/><h1 id=nav-heading class="title is-4">Today I Learned</h1></a></div><div class=nav-right><nav id=nav-items class="nav-item level is-mobile"></nav></div></nav><nav class=nav></nav></div><script src=/js/navicon-shift.js></script></section><section class=section><div class=container><div class="subtitle tags is-6 is-pulled-right"><a class="subtitle is-6" href=/tags/promethemus/>#promethemus</a>
+| <a class="subtitle is-6" href=/tags/grafana/>#grafana</a></div><h2 class="subtitle is-6">July 14, 2020</h2><div class=content><ol><li>Provisioning Grafana Docker
+docker-compose.yml</li></ol><pre><code>  prometheus:
     image: prom/prometheus
     restart: always
     volumes:
@@ -84,15 +21,13 @@ docker-compose.yml</li>
       - &quot;3000:3000&quot; # ui
     networks:
       - service
-</code></pre><p>File structure</p>
-<pre><code>./grafana
+</code></pre><p>File structure</p><pre><code>./grafana
 ├── dashboards
 │   ├── dashboard.yaml
 │   └── go-processes_rev2.json
 └── datasources
     └── datasources.yaml
-</code></pre><p>dashboard.yaml</p>
-<pre><code>apiVersion: 1
+</code></pre><p>dashboard.yaml</p><pre><code>apiVersion: 1
 
 providers:
   # &lt;string&gt; an unique provider name
@@ -114,8 +49,7 @@ providers:
     options:
       # &lt;string, required&gt; path to dashboard files on disk. Required
       path: /etc/grafana/provisioning/dashboards
-</code></pre><p>datasources.yaml</p>
-<pre><code>apiVersion: 1
+</code></pre><p>datasources.yaml</p><pre><code>apiVersion: 1
 
 # https://grafana.com/docs/grafana/latest/administration/provisioning/#data-sources
 datasources:
@@ -127,8 +61,7 @@ datasources:
     basicAuth: false
     isDefault: true
     version: 1
-</code></pre><p>Prometheus Config (config.yaml)</p>
-<pre><code>global:
+</code></pre><p>Prometheus Config (config.yaml)</p><pre><code>global:
   scrape_interval: 15s # By default, scrape targets every 15 seconds.
   evaluation_interval: 15s # Evaluate rules every 15 seconds.
 
@@ -152,24 +85,4 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: [&quot;worker:30020&quot;]
-</code></pre>
-      
-    </div>
-    
-  </div>
-</section>
-
-
-
-<section class="section">
-  <div class="container has-text-centered">
-    <p></p>
-    
-  </div>
-</section>
-
-
-
-</body>
-</html>
-
+</code></pre></div></div></section><section class=section><div class="container has-text-centered"><p></p></div></section></body></html>

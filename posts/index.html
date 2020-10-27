@@ -1,88 +1,33 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"  lang="en-us">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!doctype html><html xmlns=http://www.w3.org/1999/xhtml lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Posts | Today I Learned</title><link rel=stylesheet href=/css/style.css><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=canonical href=https://today.countableset.com/posts/><meta name=msapplication-TileColor content="#da532c"><meta name=theme-color content="#ffffff"></head><body><section class=section><div class=container><nav id=nav-main class=nav><div id=nav-name class=nav-left><a id=nav-anchor class=nav-item href=https://today.countableset.com/><h1 id=nav-heading class="title is-4">Today I Learned</h1></a></div><div class=nav-right><nav id=nav-items class="nav-item level is-mobile"></nav></div></nav><nav class=nav></nav></div><script src=/js/navicon-shift.js></script></section><section class=section><div class=container><article><div class="subtitle tags is-6 is-pulled-right"><a class="subtitle is-6" href=/tags/gradle/>#gradle</a>
+| <a class="subtitle is-6" href=/tags/asciidoc/>#asciidoc</a></div><h2 class="subtitle is-6 date"><a href=https://today.countableset.com/posts/2020-10-27/>October 27, 2020</a></h2><div class=content><p>Using <a href=https://github.com/asciidoctor/asciidoctor-gradle-plugin>asciidoctor gradle plugin</a> with <a href=https://docs.spring.io/spring-restdocs/docs/current/reference/html5/>spring restdocs extension</a> and the gradle kotlin dsl.</p><pre><code>plugins {
+  id(&quot;org.asciidoctor.jvm.convert&quot;) version &quot;3.2.0&quot;
+}
 
-<title>Posts | Today I Learned</title>
+val asciidoctorExtensions by configurations.creating
 
+dependencies {
+  asciidoctorExtensions(&quot;org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.5.RELEASE&quot;)
+}
 
-
-<link rel="stylesheet" href="/css/style.css"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<link rel="canonical" href="https://today.countableset.com/posts/">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
-</head>
-<body>
-<section class="section">
-  <div class="container">
-    <nav id="nav-main" class="nav">
-      <div id="nav-name" class="nav-left">
-        <a id="nav-anchor" class="nav-item" href="https://today.countableset.com/">
-          <h1 id="nav-heading" class="title is-4">Today I Learned</h1>
-        </a>
-      </div>
-      <div class="nav-right">
-        <nav id="nav-items" class="nav-item level is-mobile"></nav>
-      </div>
-    </nav>
-
-    <nav class="nav">
-      
-
-      
-    </nav>
-
-  </div>
-  <script src="/js/navicon-shift.js"></script>
-</section>
-<section class="section">
-  <div class="container">
-    
-    <article>
-      <div class="subtitle tags is-6 is-pulled-right">
-        
-        
-<a class="subtitle is-6" href="/tags/docker/">#docker</a>
-
-
-
-
-        
-      </div>
-      <h2 class="subtitle is-6 date"><a href="https://today.countableset.com/posts/2020-09-09/">September 9, 2020</a></h2>
-      <div class="content">
-        <p>Docker command to pull new images:</p>
-<pre><code>docker image ls --format &quot;{{.Repository}}:{{.Tag}}&quot; | xargs -I % sh -c &quot;docker pull %&quot;
-</code></pre>
-      </div>
-    </article>
-    
-    <article>
-      <div class="subtitle tags is-6 is-pulled-right">
-        
-        
-<a class="subtitle is-6" href="/tags/spring/">#spring</a>
-
-
-
-  
-  | <a class="subtitle is-6" href="/tags/kotlin/">#kotlin</a>
-  
-
-
-        
-      </div>
-      <h2 class="subtitle is-6 date"><a href="https://today.countableset.com/posts/2020-08-17/">August 17, 2020</a></h2>
-      <div class="content">
-        <ol>
-<li>Validations in Spring in Kotlin</li>
-</ol>
-<pre><code>@UniqueName
+tasks {
+  asciidoctor {
+    dependsOn(&quot;test&quot;)
+    inputs.dir(File(&quot;$buildDir/generated-snippets&quot;))
+    configurations(&quot;asciidoctorExtensions&quot;)
+    asciidoctorj {
+      baseDirFollowsSourceFile()
+    }
+    resources(delegateClosureOf&lt;CopySpec&gt; {
+      from(&quot;src/docs/asciidoc&quot;) {
+        include(&quot;**/img/**&quot;)
+        include(&quot;**/data/**&quot;)
+      }
+    })
+  }
+}
+</code></pre></div></article><article><div class="subtitle tags is-6 is-pulled-right"><a class="subtitle is-6" href=/tags/docker/>#docker</a></div><h2 class="subtitle is-6 date"><a href=https://today.countableset.com/posts/2020-09-09/>September 9, 2020</a></h2><div class=content><p>Docker command to pull new images:</p><pre><code>docker image ls --format &quot;{{.Repository}}:{{.Tag}}&quot; | xargs -I % sh -c &quot;docker pull %&quot;
+</code></pre></div></article><article><div class="subtitle tags is-6 is-pulled-right"><a class="subtitle is-6" href=/tags/spring/>#spring</a>
+| <a class="subtitle is-6" href=/tags/kotlin/>#kotlin</a></div><h2 class="subtitle is-6 date"><a href=https://today.countableset.com/posts/2020-08-17/>August 17, 2020</a></h2><div class=content><ol><li>Validations in Spring in Kotlin</li></ol><pre><code>@UniqueName
 data class CreateRequest(
     val id: String = &quot;&quot;,
     @get:NotBlank(message = &quot;{req.name.blank}&quot;)
@@ -125,14 +70,12 @@ class UniqueNameValidator(
         return result
     }
 }
-</code></pre><p><code>src/main/resources/ValidationMessages.properties</code></p>
-<pre><code>req.name.blank=Name is required.
+</code></pre><p><code>src/main/resources/ValidationMessages.properties</code></p><pre><code>req.name.blank=Name is required.
 req.name.unique=Name must be unique.
 req.description.blank=Description is required.
 req.nested.something.blank=Something is required.
 req.nested.something_else.blank=Something Else is required.
-</code></pre><p>Custom Response Messages</p>
-<pre><code>@ControllerAdvice
+</code></pre><p>Custom Response Messages</p><pre><code>@ControllerAdvice
 class ControllerAdvice {
     @ExceptionHandler(value = [MethodArgumentNotValidException::class])
     fun handleMethodArgumentNotValid(exception: MethodArgumentNotValidException): ResponseEntity&lt;ValidationError&gt; {
@@ -160,13 +103,11 @@ fun String.toSnakeCase(): String = Normalizer
     .normalize(this, Normalizer.Form.NFD)
     .replace(&quot;([A-Z]+)&quot;.toRegex(), &quot;\\_\$1&quot;)
     .toLowerCase()
-</code></pre><p>Controller</p>
-<pre><code>@PostMapping
+</code></pre><p>Controller</p><pre><code>@PostMapping
 fun create(@Valid @RequestBody body: CreateRequest): SampleDocument {
     return sampleService.save(body)
 }
-</code></pre><p>Sample Response</p>
-<pre><code>{
+</code></pre><p>Sample Response</p><pre><code>{
   &quot;status&quot;: &quot;400 BAD_REQUEST&quot;,
   &quot;message&quot;: &quot;Errors occurred during validation&quot;,
   &quot;errors&quot;: [
@@ -192,42 +133,15 @@ fun create(@Valid @RequestBody body: CreateRequest): SampleDocument {
     }
   ]
 }
-</code></pre>
-      </div>
-    </article>
-    
-    <article>
-      <div class="subtitle tags is-6 is-pulled-right">
-        
-        
-<a class="subtitle is-6" href="/tags/spring/">#spring</a>
-
-
-
-  
-  | <a class="subtitle is-6" href="/tags/tomcat/">#tomcat</a>
-  
-
-
-        
-      </div>
-      <h2 class="subtitle is-6 date"><a href="https://today.countableset.com/posts/2020-07-29/">July 29, 2020</a></h2>
-      <div class="content">
-        <ol>
-<li>Spring boot (2.3.0+) tomcat access log configuration to log to stdout</li>
-</ol>
-<pre><code>server.tomcat.accesslog.enabled=true
+</code></pre></div></article><article><div class="subtitle tags is-6 is-pulled-right"><a class="subtitle is-6" href=/tags/spring/>#spring</a>
+| <a class="subtitle is-6" href=/tags/tomcat/>#tomcat</a></div><h2 class="subtitle is-6 date"><a href=https://today.countableset.com/posts/2020-07-29/>July 29, 2020</a></h2><div class=content><ol><li>Spring boot (2.3.0+) tomcat access log configuration to log to stdout</li></ol><pre><code>server.tomcat.accesslog.enabled=true
 server.tomcat.accesslog.directory=/dev
 server.tomcat.accesslog.prefix=stdout
 server.tomcat.accesslog.buffered=false
 server.tomcat.accesslog.suffix=
 server.tomcat.accesslog.file-date-format=
 server.tomcat.accesslog.pattern=%{yyyy-MM-dd HH:mm:ss.SSS}t %r %s %b %T | %{Content-Type}i | %{Content-Type}o
-</code></pre><ol start="2">
-<li>Spring WebClient <code>Exceeded limit on max bytes to buffer</code> exception</li>
-</ol>
-<p>Fix is to increase the max memory size for a specific codec or all codecs, for example: <code>spring.codec.max-in-memory-size=20MB</code></p>
-<pre><code>2020-07-29 16:58:43.046  WARN 1 --- [or-http-epoll-2] reactor.netty.channel.FluxReceive        : [id: 0xca1ab03a, L:/x.x.x.x ! R:example.com/x.x.x.x:443] An exception has been observed post termination, use DEBUG level to see the full stack: io.netty.util.IllegalReferenceCountException: refCnt: 0, decrement: 1
+</code></pre><ol start=2><li>Spring WebClient <code>Exceeded limit on max bytes to buffer</code> exception</li></ol><p>Fix is to increase the max memory size for a specific codec or all codecs, for example: <code>spring.codec.max-in-memory-size=20MB</code></p><pre><code>2020-07-29 16:58:43.046  WARN 1 --- [or-http-epoll-2] reactor.netty.channel.FluxReceive        : [id: 0xca1ab03a, L:/x.x.x.x ! R:example.com/x.x.x.x:443] An exception has been observed post termination, use DEBUG level to see the full stack: io.netty.util.IllegalReferenceCountException: refCnt: 0, decrement: 1
 2020-07-29 16:59:36.605  INFO 1 --- [or-http-epoll-3] com.example.RestProvider                 : retry rest call single commit request, retry [6], error [org.springframework.core.io.buffer.DataBufferLimitException: Exceeded limit on max bytes to buffer : 262144]
 2020-07-29 16:59:36.607 ERROR 1 --- [or-http-epoll-3] r.n.channel.ChannelOperationsHandler     : [id: 0xb1b84f9b, L:/x.x.x.x ! R:example.com/x.x.x.x:443] Error was received while reading the incoming data. The connection will be closed.
 
@@ -275,73 +189,24 @@ io.netty.util.IllegalReferenceCountException: refCnt: 0, decrement: 1
 	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.49.Final.jar!/:4.1.49.Final]
 	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.49.Final.jar!/:4.1.49.Final]
 	at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
-</code></pre>
-      </div>
-    </article>
-    
-    <article>
-      <div class="subtitle tags is-6 is-pulled-right">
-        
-        
-<a class="subtitle is-6" href="/tags/java/">#java</a>
-
-
-
-  
-  | <a class="subtitle is-6" href="/tags/collections/">#collections</a>
-  
-  | <a class="subtitle is-6" href="/tags/exception/">#exception</a>
-  
-
-
-        
-      </div>
-      <h2 class="subtitle is-6 date"><a href="https://today.countableset.com/posts/2020-07-17/">July 17, 2020</a></h2>
-      <div class="content">
-        <ol>
-<li><code>Collections.unmodifiable*</code> can throw <code>StackOverflowError</code> errors when used recursively. For example:</li>
-</ol>
-<pre><code>Exception in thread &quot;main&quot; java.lang.StackOverflowError
+</code></pre></div></article><article><div class="subtitle tags is-6 is-pulled-right"><a class="subtitle is-6" href=/tags/java/>#java</a>
+| <a class="subtitle is-6" href=/tags/collections/>#collections</a>
+| <a class="subtitle is-6" href=/tags/exception/>#exception</a></div><h2 class="subtitle is-6 date"><a href=https://today.countableset.com/posts/2020-07-17/>July 17, 2020</a></h2><div class=content><ol><li><code>Collections.unmodifiable*</code> can throw <code>StackOverflowError</code> errors when used recursively. For example:</li></ol><pre><code>Exception in thread &quot;main&quot; java.lang.StackOverflowError
 	at java.util.Collections$UnmodifiableCollection$1.&lt;init&gt;(Collections.java:1039)
 	at java.util.Collections$UnmodifiableCollection.iterator(Collections.java:1038)
 	at java.util.Collections$UnmodifiableCollection$1.&lt;init&gt;(Collections.java:1039)
 	at java.util.Collections$UnmodifiableCollection.iterator(Collections.java:1038)
 [...]
-</code></pre><p>Reproducible Source:</p>
-<pre><code>List&lt;Integer&gt; list = Collections.unmodifiableList(Arrays.asList(0, 1, 2));
+</code></pre><p>Reproducible Source:</p><pre><code>List&lt;Integer&gt; list = Collections.unmodifiableList(Arrays.asList(0, 1, 2));
 for (int i = 0; i &lt; 10000; i++) {
     list = Collections.unmodifiableList(list);
 }
 for (int i : list) {
     System.out.println(i);
 }
-</code></pre><p>Just thought that was interesting.</p>
-
-      </div>
-    </article>
-    
-    <article>
-      <div class="subtitle tags is-6 is-pulled-right">
-        
-        
-<a class="subtitle is-6" href="/tags/promethemus/">#promethemus</a>
-
-
-
-  
-  | <a class="subtitle is-6" href="/tags/grafana/">#grafana</a>
-  
-
-
-        
-      </div>
-      <h2 class="subtitle is-6 date"><a href="https://today.countableset.com/posts/2020-07-14/">July 14, 2020</a></h2>
-      <div class="content">
-        <ol>
-<li>Provisioning Grafana Docker
-docker-compose.yml</li>
-</ol>
-<pre><code>  prometheus:
+</code></pre><p>Just thought that was interesting.</p></div></article><article><div class="subtitle tags is-6 is-pulled-right"><a class="subtitle is-6" href=/tags/promethemus/>#promethemus</a>
+| <a class="subtitle is-6" href=/tags/grafana/>#grafana</a></div><h2 class="subtitle is-6 date"><a href=https://today.countableset.com/posts/2020-07-14/>July 14, 2020</a></h2><div class=content><ol><li>Provisioning Grafana Docker
+docker-compose.yml</li></ol><pre><code>  prometheus:
     image: prom/prometheus
     restart: always
     volumes:
@@ -362,15 +227,13 @@ docker-compose.yml</li>
       - &quot;3000:3000&quot; # ui
     networks:
       - service
-</code></pre><p>File structure</p>
-<pre><code>./grafana
+</code></pre><p>File structure</p><pre><code>./grafana
 ├── dashboards
 │   ├── dashboard.yaml
 │   └── go-processes_rev2.json
 └── datasources
     └── datasources.yaml
-</code></pre><p>dashboard.yaml</p>
-<pre><code>apiVersion: 1
+</code></pre><p>dashboard.yaml</p><pre><code>apiVersion: 1
 
 providers:
   # &lt;string&gt; an unique provider name
@@ -392,8 +255,7 @@ providers:
     options:
       # &lt;string, required&gt; path to dashboard files on disk. Required
       path: /etc/grafana/provisioning/dashboards
-</code></pre><p>datasources.yaml</p>
-<pre><code>apiVersion: 1
+</code></pre><p>datasources.yaml</p><pre><code>apiVersion: 1
 
 # https://grafana.com/docs/grafana/latest/administration/provisioning/#data-sources
 datasources:
@@ -405,8 +267,7 @@ datasources:
     basicAuth: false
     isDefault: true
     version: 1
-</code></pre><p>Prometheus Config (config.yaml)</p>
-<pre><code>global:
+</code></pre><p>Prometheus Config (config.yaml)</p><pre><code>global:
   scrape_interval: 15s # By default, scrape targets every 15 seconds.
   evaluation_interval: 15s # Evaluate rules every 15 seconds.
 
@@ -430,34 +291,9 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: [&quot;worker:30020&quot;]
-</code></pre>
-      </div>
-    </article>
-    
-    <article>
-      <div class="subtitle tags is-6 is-pulled-right">
-        
-        
-<a class="subtitle is-6" href="/tags/tmux/">#tmux</a>
-
-
-
-  
-  | <a class="subtitle is-6" href="/tags/golang/">#golang</a>
-  
-  | <a class="subtitle is-6" href="/tags/heap/">#heap</a>
-  
-
-
-        
-      </div>
-      <h2 class="subtitle is-6 date"><a href="https://today.countableset.com/posts/2020-07-10/">July 10, 2020</a></h2>
-      <div class="content">
-        <p>Hello World. First!</p>
-<ol>
-<li>Profiling golang projects</li>
-</ol>
-<pre><code># .go file
+</code></pre></div></article><article><div class="subtitle tags is-6 is-pulled-right"><a class="subtitle is-6" href=/tags/tmux/>#tmux</a>
+| <a class="subtitle is-6" href=/tags/golang/>#golang</a>
+| <a class="subtitle is-6" href=/tags/heap/>#heap</a></div><h2 class="subtitle is-6 date"><a href=https://today.countableset.com/posts/2020-07-10/>July 10, 2020</a></h2><div class=content><p>Hello World. First!</p><ol><li>Profiling golang projects</li></ol><pre><code># .go file
 import (
     _ &quot;net/http/pprof&quot;
 )
@@ -469,49 +305,7 @@ $ go tool pprof heap.out
 Generating report in profile001.png
 (pprof) exit
 $ go tool pprof -http=:8080 heap.out
-</code></pre><p>Output in png requires <a href="https://graphviz.org/download/">graphviz</a> (<code>brew install graphviz</code>)</p>
-<ol start="2">
-<li>Fix tmux configuration issues when upgrading iTerm2 and tmux version 2.9 to 3.1b</li>
-</ol>
-<pre><code>unbind } ==&gt; unbind &quot;{&quot;
+</code></pre><p>Output in png requires <a href=https://graphviz.org/download/>graphviz</a> (<code>brew install graphviz</code>)</p><ol start=2><li>Fix tmux configuration issues when upgrading iTerm2 and tmux version 2.9 to 3.1b</li></ol><pre><code>unbind } ==&gt; unbind &quot;{&quot;
 unbind { ==&gt; unbind &quot;{&quot;
 bind \ if '[ ===&gt; bind \\ if '[
-</code></pre><p>Scrolling in iTerm and tmux, fixed by</p>
-<blockquote>
-<p>Solved by enabling &lsquo;enable mouse reporting&rsquo; in Preferences &gt; Profile &gt; Terminal &gt; Enable Mouse Reporting</p>
-</blockquote>
-
-      </div>
-    </article>
-    
-  </div>
-</section>
-<section class="section">
-  <div class="container">
-    <nav class="level is-mobile">
-      <div class="level-left">
-        <div class="level-item">
-          
-        </div>
-      </div>
-      <div class="level-right is-marginless">
-        <div class="level-item">
-          
-        </div>
-      </div>
-    </nav>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container has-text-centered">
-    <p></p>
-    
-  </div>
-</section>
-
-
-
-</body>
-</html>
-
+</code></pre><p>Scrolling in iTerm and tmux, fixed by</p><blockquote><p>Solved by enabling &lsquo;enable mouse reporting&rsquo; in Preferences > Profile > Terminal > Enable Mouse Reporting</p></blockquote></div></article></div></section><section class=section><div class=container><nav class="level is-mobile"><div class=level-left><div class=level-item></div></div><div class="level-right is-marginless"><div class=level-item></div></div></nav></div></section><section class=section><div class="container has-text-centered"><p></p></div></section></body></html>
