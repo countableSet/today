@@ -41,3 +41,8 @@ jobs:
           deploy_key: ${{ secrets.SSH_PRIVATE_KEY }}
           publish_dir: ./public
           cname: today.countableset.com
+
+      - name: What
+        run: |
+          ls -al
+          ls -al ./public
