@@ -4,41 +4,36 @@ name: Hugo Publishing
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
 
-    # Installs hugo on the box
-    - name: Install Hugo
-      env:
-        HUGO_VERSION: "0.73.0"
-      run: |
-        mkdir -p hugo-install
-        wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.tar.gz
-        tar -xzf hugo_extended_${HUGO_VERSION}_Linux-64bit.tar.gz -C ./hugo-install
-        rm hugo_extended_${HUGO_VERSION}_Linux-64bit.tar.gz
-        echo "::add-path::$(pwd)/hugo-install"
+      # Installs hugo on the box
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "0.73.0"
 
-    # Compile files
-    - name: Compile
-      run: make
+      # Compile files
+      - name: Compile
+        run: hugo --minify
 
-    # Commit to gh-pages
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
+      # Commit to gh-pages
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
           deploy_key: ${{ secrets.SSH_PRIVATE_KEY }}
           publish_dir: ./public
           cname: today.countableset.com
